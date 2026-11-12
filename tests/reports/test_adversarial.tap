@@ -1,0 +1,13 @@
+TAP version 13
+1..8
+ok 1 - [Tier 1] [F05] Tier 1: Framework Smoke & Subsystem Contracts > T1-F05-01: Generates 6-character uppercase code without ambiguous characters (0, 1, I, O) # time=4ms
+ok 2 - [Tier 1] [F12] Tier 1: Framework Smoke & Subsystem Contracts > T1-F12-F14: End-to-end TV pairing handshake (Request -> Approve -> Claim) # time=1ms
+ok 3 - [Tier 1] [F17] Tier 1: Framework Smoke & Subsystem Contracts > T1-F17-01: Storage enforces 50MB ceiling and rejects over-50MB payloads # time=1ms
+ok 4 - [Tier 1] [F27] Tier 1: Framework Smoke & Subsystem Contracts > T1-F27-01: 500MB disk cache evicts oldest unpinned files and protects pinned files # time=0ms
+ok 5 - [Tier 1] [F33] Tier 1: Framework Smoke & Subsystem Contracts > T1-F33-01: SafeTvPdfRenderer enforces coroutine Mutex and 3-page LRU sliding window # time=1ms
+ok 6 - [Tier 1] [F34] Tier 1: Framework Smoke & Subsystem Contracts > T1-F34-01: D-pad remote key events route to correct navigation actions # time=0ms
+ok 7 - [Tier 1] [F37] Tier 1: Framework Smoke & Subsystem Contracts > T1-F37-01: TTS probe detects missing engines and activates audio ducking when present # time=0ms
+ok 8 - [Tier 1] [F50] Tier 1: Framework Smoke & Subsystem Contracts > T1-F50-01: Fixture manifest is valid and all 19 synthetic fixtures exist with correct sizes # time=49ms
+# tests 8
+# pass 8
+# fail 0

@@ -1,0 +1,29 @@
+# Gradle / Android
+.gradle/
+build/
+*/build/
+*.apk
+*.aab
+local.properties
+.idea/
+*.iml
+.kotlin/
+
+# Node / Web
+node_modules/
+dist/
+.env.local
+.env.*.local
+
+# Python / Pytest
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# OS / Misc
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+tv_screen*.png
+.agents/

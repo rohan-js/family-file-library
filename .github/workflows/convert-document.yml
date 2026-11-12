@@ -1,0 +1,113 @@
+name: Document Conversion & Text Extraction Pipeline
+
+on:
+  repository_dispatch:
+    types: [convert-document, process-file]
+  workflow_dispatch:
+    inputs:
+      file_id:
+        description: "Supabase file UUID to convert (leave empty if processing all pending)"
+        required: false
+        type: string
+      all_pending:
+        description: "Process all pending / stuck files"
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    # Fallback sweeper: runs every 6 hours to recover dropped webhooks or stuck files
+    - cron: '0 */6 * * *'
+
+concurrency:
+  group: conversion-${{ github.event.client_payload.file_id || inputs.file_id || github.run_id }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  convert-and-extract:
+    name: Convert Office & Extract Text
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache APT Packages
+        id: apt-cache
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt/archives
+          key: ${{ runner.os }}-apt-libreoffice-fonts-${{ hashFiles('.github/workflows/convert-document.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-apt-libreoffice-fonts-
+
+      - name: Install LibreOffice, Poppler, and Indic / Microsoft Fonts
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          # Automatically accept Microsoft TrueType Core Fonts EULA non-interactively
+          echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
+
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            libreoffice-core \
+            libreoffice-writer \
+            libreoffice-calc \
+            libreoffice-impress \
+            poppler-utils \
+            fonts-smc \
+            fonts-smc-rachana \
+            fonts-smc-meera \
+            fonts-smc-chilanka \
+            fonts-smc-gayathri \
+            fonts-smc-manjari \
+            fonts-deva \
+            fonts-lohit-deva \
+            fonts-indic \
+            fonts-noto-core \
+            fonts-noto-extra \
+            fonts-noto-cjk \
+            ttf-mscorefonts-installer
+
+          # Rebuild font cache
+          sudo fc-cache -f -v
+
+      - name: Verify Font and Tool Installation
+        run: |
+          echo "=== LibreOffice Version ==="
+          libreoffice --version
+          echo "=== Poppler pdftotext Version ==="
+          pdftotext -v || true
+          echo "=== Indic Fonts Check ==="
+          fc-list :lang=ml family | sort -u | head -n 10 || echo "Malayalam fonts listed"
+          fc-list :lang=hi family | sort -u | head -n 10 || echo "Hindi fonts listed"
+
+      - name: Execute Document Conversion & Extraction
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          STORAGE_BUCKET: ${{ secrets.SUPABASE_STORAGE_BUCKET || 'family-files' }}
+          PAYLOAD_FILE_ID: ${{ github.event.client_payload.file_id }}
+          INPUT_FILE_ID: ${{ inputs.file_id }}
+          PROCESS_ALL: ${{ inputs.all_pending }}
+        run: |
+          TARGET_FILE_ID="${PAYLOAD_FILE_ID:-$INPUT_FILE_ID}"
+
+          if [ -n "$TARGET_FILE_ID" ]; then
+            echo "Running conversion for specific file: $TARGET_FILE_ID"
+            python scripts/convert_document.py --file-id "$TARGET_FILE_ID"
+          elif [ "$PROCESS_ALL" = "true" ] || [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "Running sweeper for all pending/stuck files"
+            python scripts/convert_document.py --all-pending
+          else
+            echo "No file_id specified and not in schedule mode. Defaulting to --all-pending."
+            python scripts/convert_document.py --all-pending
+          fi

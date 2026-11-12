@@ -1,0 +1,91 @@
+name: Supabase Free Tier Keep-Alive
+
+on:
+  schedule:
+    # Runs at 04:00 UTC every 3 days (well within Supabase's 7-day inactivity pause threshold)
+    - cron: '0 4 */3 * *'
+  workflow_dispatch:
+    # Allows manual ping from GitHub Actions UI anytime
+
+permissions:
+  contents: read
+
+jobs:
+  ping-supabase:
+    name: Ping Database & Prevent Project Pausing
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Send Keep-Alive Query to Supabase PostgREST
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_ANON_KEY || secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_KEY" ]; then
+            echo "::error::SUPABASE_URL or SUPABASE_KEY is missing from repository secrets."
+            exit 1
+          fi
+
+          RPC_ENDPOINT="${SUPABASE_URL%/}/rest/v1/rpc/health_check_ping"
+          TABLE_ENDPOINT="${SUPABASE_URL%/}/rest/v1/spaces?select=id&limit=1"
+
+          MAX_RETRIES=3
+          RETRY_DELAY=5
+          ATTEMPT=1
+          SUCCESS=0
+
+          while [ $ATTEMPT -le $MAX_RETRIES ]; do
+            echo "Attempt $ATTEMPT of $MAX_RETRIES: Pinging database at $(date -u +"%Y-%m-%dT%H:%M:%SZ")..."
+            
+            # Try health_check_ping RPC first
+            HTTP_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}:%{time_total}" \
+              -X POST \
+              -H "apikey: $SUPABASE_KEY" \
+              -H "Authorization: Bearer $SUPABASE_KEY" \
+              -H "Content-Type: application/json" \
+              -H "User-Agent: GitHubActions-KeepAlive/1.0" \
+              -d '{}' \
+              --max-time 15 \
+              "$RPC_ENDPOINT")
+
+            HTTP_CODE=$(echo "$HTTP_RESPONSE" | cut -d':' -f1)
+            RESPONSE_TIME=$(echo "$HTTP_RESPONSE" | cut -d':' -f2)
+
+            if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "204" ]; then
+              echo "✅ Health check ping RPC succeeded. HTTP $HTTP_CODE | Latency: ${RESPONSE_TIME}s"
+              SUCCESS=1
+              break
+            fi
+
+            # Fallback to direct PostgREST table read if RPC is not present
+            echo "RPC returned HTTP $HTTP_CODE. Falling back to table query..."
+            HTTP_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}:%{time_total}" \
+              -H "apikey: $SUPABASE_KEY" \
+              -H "Authorization: Bearer $SUPABASE_KEY" \
+              -H "Accept: application/json" \
+              -H "User-Agent: GitHubActions-KeepAlive/1.0" \
+              --max-time 15 \
+              "$TABLE_ENDPOINT")
+
+            HTTP_CODE=$(echo "$HTTP_RESPONSE" | cut -d':' -f1)
+            RESPONSE_TIME=$(echo "$HTTP_RESPONSE" | cut -d':' -f2)
+
+            echo "Table Query Response: HTTP $HTTP_CODE | Latency: ${RESPONSE_TIME}s"
+
+            if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "204" ]; then
+              echo "✅ Supabase database is active and responding. Inactivity timer successfully reset."
+              SUCCESS=1
+              break
+            else
+              echo "⚠️ Unexpected HTTP status: $HTTP_CODE. Retrying in ${RETRY_DELAY}s..."
+              sleep $RETRY_DELAY
+              ATTEMPT=$((ATTEMPT + 1))
+              RETRY_DELAY=$((RETRY_DELAY * 2))
+            fi
+          done
+
+          if [ $SUCCESS -ne 1 ]; then
+            echo "::error::Keep-alive failed after $MAX_RETRIES attempts. Project might be paused or endpoint unreachable."
+            exit 1
+          fi

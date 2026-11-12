@@ -1,0 +1,14 @@
+Android TV Family File Library - Plain Text Document
+====================================================
+
+This is a high-legibility plain text document intended for the 28sp TV viewer.
+Navigation is optimized for D-pad directional controls:
+- Up/Down: Smooth vertical line scrolling
+- Left/Right: Page jump scrolling
+- Center/OK: Toggle controls overlay
+- Back: Return to shelf view
+
+Features validated:
+1. 5% overscan margins compliance (48dp H, 27dp V)
+2. Clean word-wrapping without horizontal truncation
+3. UTF-8 international characters rendering

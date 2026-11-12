@@ -1,0 +1,120 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-11-11T16:26:15.160Z",
+  "summary": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 32.528099999999995,
+    "exitCode": 0,
+    "byTier": {
+      "tier1": {
+        "total": 8,
+        "passed": 8,
+        "failed": 0,
+        "skipped": 0
+      },
+      "tier2": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0
+      },
+      "tier3": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0
+      },
+      "tier4": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "Tier 1: Framework Smoke & Subsystem Contracts > T1-F05-01: Generates 6-character uppercase code without ambiguous characters (0, 1, I, O)",
+      "name": "T1-F05-01: Generates 6-character uppercase code without ambiguous characters (0, 1, I, O)",
+      "suite": "Tier 1: Framework Smoke & Subsystem Contracts",
+      "tier": 1,
+      "feature": "F05",
+      "status": "passed",
+      "durationMs": 4.45620000000001,
+      "error": null
+    },
+    {
+      "id": "Tier 1: Framework Smoke & Subsystem Contracts > T1-F12-F14: End-to-end TV pairing handshake (Request -> Approve -> Claim)",
+      "name": "T1-F12-F14: End-to-end TV pairing handshake (Request -> Approve -> Claim)",
+      "suite": "Tier 1: Framework Smoke & Subsystem Contracts",
+      "tier": 1,
+      "feature": "F12",
+      "status": "passed",
+      "durationMs": 1.9472999999999985,
+      "error": null
+    },
+    {
+      "id": "Tier 1: Framework Smoke & Subsystem Contracts > T1-F17-01: Storage enforces 50MB ceiling and rejects over-50MB payloads",
+      "name": "T1-F17-01: Storage enforces 50MB ceiling and rejects over-50MB payloads",
+      "suite": "Tier 1: Framework Smoke & Subsystem Contracts",
+      "tier": 1,
+      "feature": "F17",
+      "status": "passed",
+      "durationMs": 1.8166000000000082,
+      "error": null
+    },
+    {
+      "id": "Tier 1: Framework Smoke & Subsystem Contracts > T1-F27-01: 500MB disk cache evicts oldest unpinned files and protects pinned files",
+      "name": "T1-F27-01: 500MB disk cache evicts oldest unpinned files and protects pinned files",
+      "suite": "Tier 1: Framework Smoke & Subsystem Contracts",
+      "tier": 1,
+      "feature": "F27",
+      "status": "passed",
+      "durationMs": 0.536200000000008,
+      "error": null
+    },
+    {
+      "id": "Tier 1: Framework Smoke & Subsystem Contracts > T1-F33-01: SafeTvPdfRenderer enforces coroutine Mutex and 3-page LRU sliding window",
+      "name": "T1-F33-01: SafeTvPdfRenderer enforces coroutine Mutex and 3-page LRU sliding window",
+      "suite": "Tier 1: Framework Smoke & Subsystem Contracts",
+      "tier": 1,
+      "feature": "F33",
+      "status": "passed",
+      "durationMs": 1.0736000000000132,
+      "error": null
+    },
+    {
+      "id": "Tier 1: Framework Smoke & Subsystem Contracts > T1-F34-01: D-pad remote key events route to correct navigation actions",
+      "name": "T1-F34-01: D-pad remote key events route to correct navigation actions",
+      "suite": "Tier 1: Framework Smoke & Subsystem Contracts",
+      "tier": 1,
+      "feature": "F34",
+      "status": "passed",
+      "durationMs": 0.20399999999999352,
+      "error": null
+    },
+    {
+      "id": "Tier 1: Framework Smoke & Subsystem Contracts > T1-F37-01: TTS probe detects missing engines and activates audio ducking when present",
+      "name": "T1-F37-01: TTS probe detects missing engines and activates audio ducking when present",
+      "suite": "Tier 1: Framework Smoke & Subsystem Contracts",
+      "tier": 1,
+      "feature": "F37",
+      "status": "passed",
+      "durationMs": 0.19259999999999877,
+      "error": null
+    },
+    {
+      "id": "Tier 1: Framework Smoke & Subsystem Contracts > T1-F50-01: Fixture manifest is valid and all 19 synthetic fixtures exist with correct sizes",
+      "name": "T1-F50-01: Fixture manifest is valid and all 19 synthetic fixtures exist with correct sizes",
+      "suite": "Tier 1: Framework Smoke & Subsystem Contracts",
+      "tier": 1,
+      "feature": "F50",
+      "status": "passed",
+      "durationMs": 19.536599999999993,
+      "error": null
+    }
+  ]
+}

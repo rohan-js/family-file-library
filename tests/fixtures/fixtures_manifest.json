@@ -1,0 +1,264 @@
+{
+  "generator_version": "1.0.0",
+  "generated_at": "2026-11-11T16:00:00Z",
+  "fixtures_count": 19,
+  "fixtures": [
+    {
+      "name": "sample_document.pdf",
+      "path": "tests/fixtures/sample_document.pdf",
+      "mime_type": "application/pdf",
+      "category": "pdf",
+      "size_bytes": 1079,
+      "sha256": "c43a6600f4af6d3a79caf2838034fa9f37503dc6c8f9602f20164d49310c46bf",
+      "extractable_text": true,
+      "features": [
+        "F33",
+        "F50"
+      ]
+    },
+    {
+      "name": "sample_scanned.pdf",
+      "path": "tests/fixtures/sample_scanned.pdf",
+      "mime_type": "application/pdf",
+      "category": "pdf",
+      "size_bytes": 12958,
+      "sha256": "a4cafca8e8326e746c5891bab70cdedcd3b080b2b687c36fec423296681e2918",
+      "extractable_text": false,
+      "features": [
+        "F37",
+        "F45"
+      ]
+    },
+    {
+      "name": "sample_indic_malayalam.docx",
+      "path": "tests/fixtures/sample_indic_malayalam.docx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "category": "office",
+      "size_bytes": 1215,
+      "sha256": "00609625dcac1d37c3dba6e898bae1dd22042a72bb82843040ad3b3510cd51b3",
+      "language": "malayalam",
+      "target_fonts": [
+        "Rachana",
+        "Meera"
+      ],
+      "features": [
+        "F43",
+        "F44",
+        "F50"
+      ]
+    },
+    {
+      "name": "sample_indic_malayalam.pdf",
+      "path": "tests/fixtures/sample_indic_malayalam.pdf",
+      "mime_type": "application/pdf",
+      "category": "pdf",
+      "size_bytes": 1160,
+      "sha256": "8466bb4dbe7925b76c61fcb897d7dc4f509d362d8dacc0c5a5ec42dd93cb32ec",
+      "language": "malayalam",
+      "features": [
+        "F26",
+        "F33",
+        "F44"
+      ]
+    },
+    {
+      "name": "sample_indic_devanagari.docx",
+      "path": "tests/fixtures/sample_indic_devanagari.docx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "category": "office",
+      "size_bytes": 1182,
+      "sha256": "17410065be3009106543bbf78b82ad36293ea7c50e28fa9300142b883779c49c",
+      "language": "devanagari",
+      "target_fonts": [
+        "Lohit Devanagari"
+      ],
+      "features": [
+        "F43",
+        "F44",
+        "F50"
+      ]
+    },
+    {
+      "name": "sample_indic_devanagari.pdf",
+      "path": "tests/fixtures/sample_indic_devanagari.pdf",
+      "mime_type": "application/pdf",
+      "category": "pdf",
+      "size_bytes": 1173,
+      "sha256": "f12ed3dadc3a14e63e2d10d6d7f7a8b64ac5addfee4254b7504f72fb57ac20c2",
+      "language": "devanagari",
+      "features": [
+        "F26",
+        "F33",
+        "F44"
+      ]
+    },
+    {
+      "name": "sample_slides.pptx",
+      "path": "tests/fixtures/sample_slides.pptx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "category": "office",
+      "size_bytes": 2896,
+      "sha256": "ab4dc75e98a7301d1f5e1c701930f0c7c106b05db07bc8d26e65f2ca55030552",
+      "slide_count": 3,
+      "features": [
+        "F43",
+        "F50"
+      ]
+    },
+    {
+      "name": "sample_sheet.xlsx",
+      "path": "tests/fixtures/sample_sheet.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "category": "office",
+      "size_bytes": 2731,
+      "sha256": "f9db8d016f213e269cd29977f3ce27bd26dae5ff28a1df22f11534c030158ef1",
+      "column_count": 15,
+      "features": [
+        "F43",
+        "F50"
+      ]
+    },
+    {
+      "name": "sample_text.txt",
+      "path": "tests/fixtures/sample_text.txt",
+      "mime_type": "text/plain",
+      "category": "text",
+      "size_bytes": 553,
+      "sha256": "c3bbc5591004829ad0427b04bbbb9ed2b29e449c660c8992a96231baaeb8a975",
+      "features": [
+        "F36"
+      ]
+    },
+    {
+      "name": "sample_markdown.md",
+      "path": "tests/fixtures/sample_markdown.md",
+      "mime_type": "text/markdown",
+      "category": "text",
+      "size_bytes": 496,
+      "sha256": "350b0cda704c8a9d1d9d5e2334b5e01134995ad34981fdf66b51f4f7f0b1c451",
+      "features": [
+        "F36"
+      ]
+    },
+    {
+      "name": "sample_photo.jpg",
+      "path": "tests/fixtures/sample_photo.jpg",
+      "mime_type": "image/jpeg",
+      "category": "image",
+      "size_bytes": 184,
+      "sha256": "40e33df61af7143d9fe7f7baf30b44d3692d3bfcf0a9906c2b658112a856376a",
+      "features": [
+        "F35"
+      ]
+    },
+    {
+      "name": "sample_image.png",
+      "path": "tests/fixtures/sample_image.png",
+      "mime_type": "image/png",
+      "category": "image",
+      "size_bytes": 134,
+      "sha256": "830f694449ec3e9a6d730e91d6645fbee5a5d80fe2d0026de884b14c75efad86",
+      "dimensions": {
+        "width": 64,
+        "height": 64
+      },
+      "features": [
+        "F35"
+      ]
+    },
+    {
+      "name": "sample_photo_12mp.png",
+      "path": "tests/fixtures/sample_photo_12mp.png",
+      "mime_type": "image/png",
+      "category": "image",
+      "size_bytes": 40014,
+      "sha256": "e6e1a3a0560c5bffb737f3dae7632a6e50e16e5b857fd933e87651617556c77a",
+      "dimensions": {
+        "width": 4000,
+        "height": 3000,
+        "megapixels": 12.0
+      },
+      "features": [
+        "F35",
+        "F50"
+      ]
+    },
+    {
+      "name": "sample_50mb_boundary.bin",
+      "path": "tests/fixtures/sample_50mb_boundary.bin",
+      "mime_type": "application/octet-stream",
+      "category": "boundary",
+      "size_bytes": 52428800,
+      "sha256": "89d7b28f46a344953b5e125f20ce7ae8d352f568ba6823408439a187224c7383",
+      "expected_acceptance": true,
+      "features": [
+        "F17",
+        "F21"
+      ]
+    },
+    {
+      "name": "sample_over_50mb.bin",
+      "path": "tests/fixtures/sample_over_50mb.bin",
+      "mime_type": "application/octet-stream",
+      "category": "boundary",
+      "size_bytes": 52428801,
+      "sha256": "6b678fc0311d6ac40c96657242dfc2b7b8b069bb824d15bfa89d8321c998dc9c",
+      "expected_acceptance": false,
+      "features": [
+        "F17",
+        "F21"
+      ]
+    },
+    {
+      "name": "sample_zero_byte.txt",
+      "path": "tests/fixtures/sample_zero_byte.txt",
+      "mime_type": "text/plain",
+      "category": "null_case",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expected_acceptance": false,
+      "features": [
+        "F21",
+        "F43"
+      ]
+    },
+    {
+      "name": "sample_corrupt.pdf",
+      "path": "tests/fixtures/sample_corrupt.pdf",
+      "mime_type": "application/pdf",
+      "category": "corrupt",
+      "size_bytes": 74,
+      "sha256": "ef00755b2535756efc550e41a0bf6121cb604f2bdc75bdce79727b8ae9bfefd9",
+      "expected_acceptance": false,
+      "features": [
+        "F33",
+        "F43"
+      ]
+    },
+    {
+      "name": "sample_corrupt.docx",
+      "path": "tests/fixtures/sample_corrupt.docx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "category": "corrupt",
+      "size_bytes": 69,
+      "sha256": "bd40cbe238f5ac770549030c0157d421c8dd7f4da98e5cb8e6187ccef9a0db4d",
+      "expected_acceptance": false,
+      "features": [
+        "F43",
+        "F50"
+      ]
+    },
+    {
+      "name": "sample_null_bytes.txt",
+      "path": "tests/fixtures/sample_null_bytes.txt",
+      "mime_type": "text/plain",
+      "category": "sanitization",
+      "size_bytes": 151,
+      "sha256": "10296cbf4481c67f00fd7ac3766b1c0fdb12d677c7b4570a0f3b1e1946da7cb1",
+      "features": [
+        "F07",
+        "F45"
+      ]
+    }
+  ]
+}

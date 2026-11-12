@@ -1,0 +1,58 @@
+name: Weekly Supabase Metadata Backup
+
+on:
+  schedule:
+    # Runs at 02:00 UTC every Sunday
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+    # Allows on-demand manual backup
+
+permissions:
+  contents: write
+
+jobs:
+  backup-metadata:
+    name: Export & Archive Metadata
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Metadata Export Script
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          python scripts/backup_metadata.py --output-dir backups --max-keep 12
+
+      - name: Upload Backup as GitHub Actions Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: supabase-metadata-backup
+          path: backups/metadata_backup_*.json.gz
+          retention-days: 90
+
+      - name: Commit and Push Backup to Private Repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add backups/
+          
+          # Only commit if changes exist
+          if git diff --staged --quiet; then
+            echo "No new backup changes to commit."
+          else
+            git commit -m "chore(backup): automated weekly Supabase metadata backup [skip ci]"
+            git push origin HEAD:${{ github.ref_name }}
+            echo "✅ Backup archive committed and pushed to repository."
+          fi
